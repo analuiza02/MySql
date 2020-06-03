@@ -1,0 +1,83 @@
+create database bibli;
+
+use bibli;
+
+CREATE TABLE cliente (
+ra int PRIMARY KEY auto_increment,
+telefone varchar(255),
+dataNascimento date,
+nome varchar(255),
+email varchar(255),
+turma varchar(255));
+
+CREATE TABLE emprestimo_devolucao (
+codEmprestimo int PRIMARY KEY auto_increment,
+data_emprestimo date,
+data_devolucao date,
+ra int,
+codFuncionario int,
+codlivro int,
+FOREIGN KEY(ra) REFERENCES cliente (ra));
+
+
+CREATE TABLE bibliotecario (
+logradouro varchar(255),
+num int,
+complemento varchar(255),
+bairro varchar(255),
+cidade varchar(255),
+uf char(2),
+cep int,
+nome varchar(255),
+telefone varchar(255),
+email varchar(255) unique,
+cpf varchar(255),
+dataNascimento date,
+rg varchar(255),
+codFuncionario int PRIMARY KEY auto_increment);
+
+
+CREATE TABLE livro (
+codlivro int PRIMARY KEY auto_increment,
+titulo varchar(255),
+editora varchar(255),
+genero varchar(255),
+autor varchar(255));
+
+ALTER TABLE emprestimo_devolucao ADD FOREIGN KEY(codFuncionario) REFERENCES bibliotecario (codFuncionario);
+ALTER TABLE emprestimo_devolucao ADD FOREIGN KEY(codlivro) REFERENCES livro (codlivro);
+
+INSERT INTO cliente (nome, turma, email, telefone, dataNascimento) VALUES
+('Carlos', '1C','carlos@gmail.com','11-976543210','08/02/2005'),
+('Carla', '1B','carla2@gmail.com','11-970987650','25/04/2005'),
+('Maria', '2B','mariaz@gmail.com','11-949087651','18/12/2004'),
+('Rodrigo', '1C','rodriguinhoo@gmail.com','11-930568310','30/03/2005'),
+('Ana', '1A','ana@gmail.com','11-976543210','08/02/2005'),
+('Beto', '1F','betinho@gmail.com','11-943781001','29/02/2005'),
+('Livia', '1C','livia@gmail.com','11-982063579','04/06/2005'),
+('Carlo', '1B','carlo@gmail.com','11-928745607','20/08/2005'),
+('Paulo', '1A','paulo@gmail.com','11-920985678','06/03/2005'),
+('César', '1C','cesinha@gmail.com','11-987532091','10/09/2005'),
+
+INSERT INTO bibliotecario (nome, telefone, email, cpf, dataNascimento, cidade, uf) VALUES
+('Marta','11-999999999','marta@gmail.com','478.987.345.09','09-08-1978','Maua','sp'),
+('Maria','11-988888888','maria@gmail.com','456.123.345.08','14-09-1988','Ribeirão Pires','sp'),
+('Raquel','1195555-8986','raquel@gmail.com','578.109.568.78','30-03-2000','Ribeirão Pires','sp'),
+('Marcio','(56) 41691-4956','zebenzui1402@igmail.com','22615896032','20-05-1942','Maceió','al'),
+('Amanda','(48) 32820-6934','flavius3865@inserver.tk','25328213025','26-03-1998','Ariquemes','ro'),
+('Leticio','(41) 70585-9028','adahy9063@inserver.tk','67521885058','07-04-1960','Brusque','sc'),
+('Patricia','(51) 18673-6870','abdeluahid1425@inserver.tk','67243440002','04-05-1956','maua','sp'),
+('Helena','(24) 87764-7906','caiyun6012@inserver.tk','30060718080','13-11-1960','Rio de Janeiro','rj'),
+('Arthur','(69) 33128-5832','garegin6391@inserver.tk','21882822056','21-02-1996','Ribeirão Pires','sp');
+
+insert into livro (titulo, editora, genero, autor) VALUES
+('a casa','sapinho','infantil','Maria'),
+('portugues','editora brasil','escolar','Paulo'),
+('A montanha','global','aventura', 'carlos'),
+('Bolos','cozinha legal', 'culinaria', 'Maria da Silva'),
+('O ciborgue','editora futuro','ficção científica','Rodrigo Oliveira');
+
+insert into emprestimo_devolucao (data_emprestimo, data_devolucao, codFuncionario, codlivro) VALUES
+('12-04-2020','18-04-2020','1','3'),
+('10-04-2020','14-04-2020','2','2'),
+('08-04-2020','12-04-2020','4','3');
